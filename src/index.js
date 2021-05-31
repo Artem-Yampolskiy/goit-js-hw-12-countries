@@ -11,43 +11,41 @@ const refs = getRefs();
 refs.input.addEventListener('input', debounce(onInputChange, 500));
 
 function onInputChange(event) {
-    const searchQuery = event.target.value;
-    if (searchQuery.trim() !== '') {
-        API.fetchCountries(searchQuery).then(renderCountryMurkup).catch(onFetchError);
-    };
-    
-};
+  const searchQuery = event.target.value;
 
-function renderCountryMurkup(countries) {
-    clearMurkup();
+  API.fetchCountries(searchQuery).then(renderCountryMarkup).catch(onFetchError);
+}
 
-    if ((countries.length > 1) & (countries.length < 11)) {
-            createListCountriesMurkup(countries)    
-        };
+function renderCountryMarkup(countries) {
+  clearMarkup();
 
-        if (countries.length === 1) {            
-            refs.list.insertAdjacentHTML('afterbegin', countryCardTpl(countries[0]));
-        };
+  if (countries.length === 1) {
+    refs.list.insertAdjacentHTML('afterbegin', countryCardTpl(countries[0]));
+  }
 
-        if (countries.length > 10) {            
-            alert({
-                text: 'Too many matches found. Please enter a more specific query!',
-                delay: 2000,
-                mouseReset: true,
-                sticker: false,
-            });
-        };
-};
+  if ((countries.length > 1) & (countries.length < 11)) {
+    createListCountriesMarkup(countries);
+  }
 
-function clearMurkup() {
-    refs.list.innerHTML = '';
-};
+  if (countries.length > 10) {
+    alert({
+      text: 'Too many matches found. Please enter a more specific query!',
+      delay: 2000,
+      mouseReset: true,
+      sticker: false,
+    });
+  }
+}
 
-function createListCountriesMurkup(countries) {
-    const countryesList = countries.map(country => `<li>${country.name}</li>`).join('');
-            return (refs.list.innerHTML = countryesList);
-};
+function clearMarkup() {
+  refs.list.innerHTML = '';
+}
+
+function createListCountriesMarkup(countries) {
+  const countriesList = countries.map(country => `<li>${country.name}</li>`).join('');
+  return (refs.list.innerHTML = countriesList);
+}
 
 function onFetchError(error) {
-    console.log(error);
+  console.log(error);
 }
