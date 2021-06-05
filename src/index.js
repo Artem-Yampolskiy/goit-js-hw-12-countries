@@ -5,7 +5,7 @@ import countryCardTpl from './templates/country.hbs';
 import debounce from 'lodash.debounce';
 import { error, notice } from '@pnotify/core';
 import '@pnotify/core/dist/BrightTheme.css';
-import fetchCountries from './js/fetchCountries';
+
 
 const refs = getRefs();
 
@@ -14,7 +14,7 @@ refs.input.addEventListener('input', debounce(onInputChange, 500));
 function onInputChange(event) {
   const searchQuery = event.target.value;
   clearMarkup();
-console.log(API.fetchCountries(searchQuery))
+
   if (searchQuery.length < 1)
     return;
 
@@ -71,4 +71,4 @@ function pontyfyMassage(message) {
       title: `${message}`,
       delay: 2000,
     });
-}
+};
